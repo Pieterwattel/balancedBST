@@ -2,12 +2,12 @@ import { Tree } from '../src/tree';
 import { Node } from '../src/node';
 
 test('tree is a class', () => {
-  expect(Boolean(new Tree())).toBe(true);
+  expect(Boolean(new Tree([1]))).toBe(true);
 });
 
 test('tree has to accept an array', () => {
-  expect(new Tree()).toThrow(true);
-  expect(new Tree([1, 2, 3])).toThrow(false);
+  expect(() => new Tree()).toThrow('Tree instance requires array');
+  expect(() => new Tree([1, 2, 3])).not.toThrow();
 });
 
 test('tree has a root attribute', () => {
@@ -32,6 +32,7 @@ test('bst has method isTree', () => {
     left: nodeLeft,
     right: null,
   });
+  expect(testTree.isTree()).toBe(false);
   testTree.root = nodeRoot;
   expect(testTree.isTree()).toBe(true);
 });

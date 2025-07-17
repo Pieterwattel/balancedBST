@@ -1,10 +1,11 @@
-import { Node } from '../src/node';
+import { Tree } from '../src/tree';
 
 test('node class constructor exists', () => {
-  expect(Boolean(new Node({ data: 'data!' }))).toBe(true);
+  const node = new Tree._Node({ data: 'data!' });
+  expect(node).toBeInstanceOf(Tree._Node);
 });
 
-const testNode = new Node({ data: 'data!' });
+const testNode = new Tree._Node({ data: 'data!' });
 
 test('node has left child', () => {
   expect(testNode.left).toBe(null);
