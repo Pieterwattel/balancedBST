@@ -1,5 +1,4 @@
 import { Tree } from '../src/tree';
-import { Node } from '../src/node';
 
 test('tree is a class', () => {
   expect(Boolean(new Tree([1]))).toBe(true);
@@ -11,8 +10,8 @@ test('tree has to accept an array', () => {
 });
 
 test('tree has a root attribute', () => {
-  expect(testTree).toHaveProperty('root');
-  expect('root' in testTree).toBe(true);
+  expect(testTree).toHaveProperty('_root');
+  expect('_root' in testTree).toBe(true);
 });
 
 test('tree can run mergeSort', () => {
@@ -22,18 +21,28 @@ test('tree can run mergeSort', () => {
 const testTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 
 test('bst has method isTree', () => {
-  const nodeLeft = new Node({
+  const nodeRightRight = new Tree._Node({
+    data: 'nodeRightRightData',
+    left: null,
+    right: null,
+  });
+  const nodeLeft = new Tree._Node({
     data: 'nodeLeftData',
     left: null,
     right: null,
   });
-  const nodeRoot = new Node({
+  const nodeRight = new Tree._Node({
+    data: 'nodeRightData',
+    left: null,
+    right: nodeRightRight,
+  });
+  const nodeRoot = new Tree._Node({
     data: 'rootNodeData',
     left: nodeLeft,
-    right: null,
+    right: nodeRight,
   });
   expect(testTree.isTree()).toBe(false);
-  testTree.root = nodeRoot;
+  testTree._root = nodeRoot;
   expect(testTree.isTree()).toBe(true);
 });
 

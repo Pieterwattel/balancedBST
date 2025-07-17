@@ -10,7 +10,6 @@ class Tree {
     }
   };
 
-  root = null;
   #array = [];
 
   constructor(array) {
@@ -22,24 +21,29 @@ class Tree {
 
   //public interface
   isTree() {
+    if (!this._root) {
+      return false;
+    }
+
+    const NodeClass = this.constructor._Node;
     let isThisATree = false;
-    let nodeAmount = 0;
+    let nodeCount = 0;
     /*
     requirements:
     more than 1 node.
     nodes are an instance of Node class
     */
-    let currentNode = this.root;
+    let currentNode = this._root;
     (function checkoutNode(currentNode) {
-      if (currentNode instanceof Node) {
+      if (currentNode instanceof NodeClass) {
         console.log('wasnode');
-        nodeAmount++;
+        nodeCount++;
         currentNode.left ? checkoutNode(currentNode.left) : null;
         currentNode.right ? checkoutNode(currentNode.right) : null;
       }
-    })();
+    })(this._root);
 
-    if (nodeAmount > 1) {
+    if (nodeCount > 1) {
       isThisATree = true;
     }
 
@@ -47,6 +51,8 @@ class Tree {
   }
 
   //private interface
+  _root = null;
+
   _mergeSort(arr) {
     return mergeSort(arr);
   }
