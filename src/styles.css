@@ -1,0 +1,54 @@
+/*base - formatting*/
+/* #region */
+* {
+  outline: 1px solid rebeccapurple;
+  background-color: rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+one-sec-shadow-host,
+one-sec-shadow-host > * {
+  height: 0 !important;
+  width: 0 !important;
+  visibility: hidden;
+  z-index: -1;
+  position: absolute;
+}
+/* #endregion*/
+
+/* -content placement- */
+/* #region */
+/* #endregion*/
+
+/* -sizing-*/
+/* #region */
+/* #endregion */
+
+/* -backgrounds- */
+/* #region */
+/* #endregion */
+
+/*container-relative placements*/
+/* #region */
+/* #endregion */
+
+/* -media queries- */
+/* #region */
+/* #endregion */
+
+/* -specific formatting- */
+/* #region */
+/* #endregion */
