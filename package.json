@@ -1,6 +1,9 @@
 {
   "type": "module",
   "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "babel-jest": "^30.0.4",
     "css-loader": "^7.1.2",
     "html-loader": "^5.1.0",
     "html-webpack-plugin": "^5.6.3",
@@ -17,7 +20,8 @@
     "dev": "webpack serve --config webpack.dev.js",
     "deploy": "git subtree push --prefix dist origin gh-pages",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:failStop": "jest --bail"
   },
   "prettier": {
     "semi": true,
