@@ -14,29 +14,29 @@ test('tree has a root attribute', () => {
   expect('_root' in testTree).toBe(true);
 });
 
-test('tree can run mergeSort', () => {
-  expect(testTree._mergeSort([2, 1, 4, 6, 5])).toStrictEqual([1, 2, 4, 5, 6]);
+test('tree can sort array', () => {
+  expect(testTree._sortArray([2, 1, 4, 6, 5])).toStrictEqual([1, 2, 4, 5, 6]);
 });
 
 const testTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 
 test('bst has method isTree', () => {
-  const nodeRightRight = new Tree._Node({
+  const nodeRightRight = new testTree._Node({
     data: 'nodeRightRightData',
     left: null,
     right: null,
   });
-  const nodeLeft = new Tree._Node({
+  const nodeLeft = new testTree._Node({
     data: 'nodeLeftData',
     left: null,
     right: null,
   });
-  const nodeRight = new Tree._Node({
+  const nodeRight = new testTree._Node({
     data: 'nodeRightData',
     left: null,
     right: nodeRightRight,
   });
-  const nodeRoot = new Tree._Node({
+  const nodeRoot = new testTree._Node({
     data: 'rootNodeData',
     left: nodeLeft,
     right: nodeRight,
@@ -47,5 +47,7 @@ test('bst has method isTree', () => {
 });
 
 test('bst has method buildTree', () => {
-  expect(testTree.buildTree([1, 2, 3]).isTree()).toBe(true);
+  expect(testTree.isTree(testTree.buildTree(['a', 'b', 'c', 'd', 'e']))).toBe(
+    true,
+  );
 });
