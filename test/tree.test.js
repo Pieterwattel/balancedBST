@@ -47,7 +47,50 @@ test('bst has method isTree', () => {
 });
 
 test('bst has method buildTree', () => {
-  expect(testTree.isTree(testTree.buildTree(['a', 'b', 'c', 'd', 'e']))).toBe(
-    true,
-  );
+  testTree.buildTree(['a', 'b', 'c', 'd', 'e']);
+  expect(testTree.isTree()).toBe(true);
 });
+
+test('bst has a clear function', () => {
+  testTree.buildTree([1, 2, 3, 5, 9, 20, 6, 21, 8]);
+  testTree.clear();
+  expect(testTree.isTree()).toBe(false);
+});
+
+// vvv advanced functions tests vvv
+
+test('can find value', () => {
+  testTree.buildTree([1, 2, 3]);
+  testTree.getTreeOverview();
+
+  expect(testTree.find(3)).toBe(3);
+  expect(testTree.find(4)).toBe(undefined);
+  expect(testTree.find(1)).toBe(1);
+});
+
+test('insert method', () => {
+  testTree.buildTree([1, 2]);
+  testTree.insert(4);
+
+  expect(testTree.find(1)).toBeInstanceOf(testTree._Node);
+  expect(testTree.find(1).data).toBe(1);
+
+  expect(testTree.find(3)).toBe(null);
+
+  expect(testTree.find(4).data).toBe(4);
+  expect(testTree.find(4)).toBeInstanceOf(testTree._Node);
+});
+
+test('deleteItem method', () => {
+  testTree.buildTree([1, 2, 3, 4]);
+  testTree.delete(4);
+
+  expect(testTree.find(4).data).toBe(4);
+  testTree.delete(4);
+  expect(testTree.find(4).data).toBe(null);
+  expect(testTree.find(3).data).toBe(3);
+  expect(testTree.find(2).data).toBe(2);
+  expect(testTree.find(1).data).toBe(1);
+});
+
+test('deleteItem method', () => {});
