@@ -3,6 +3,7 @@ import { Node } from './node';
 
 class Tree {
   #array = [];
+  #i = 0;
 
   constructor(array) {
     if (!Array.isArray(array)) {
@@ -88,8 +89,6 @@ class Tree {
     let arr = [];
 
     function checkNode(node, layer) {
-      //console.log(node.data, layer);
-
       if (!Array.isArray(arr[layer])) {
         arr[layer] = [];
       }
@@ -132,14 +131,142 @@ class Tree {
   }
 
   find(value) {
-    let treeArr = this._getDepthFirstTraversalArray();
+    let returnValue = undefined;
+    function findNode(node) {
+      if (node.data == value) {
+        returnValue = node;
+      }
 
-    let node = treeArr.find((node) => node.data === value);
+      if (value < node.data) {
+        if (!node.left) {
+          return;
+        } else {
+          return findNode(node.left);
+        }
+      } else {
+        if (!node.right) {
+          return;
+        } else {
+          return findNode(node.right);
+        }
+      }
+    }
 
-    return node ? node.data : node;
+    findNode(this._root);
+
+    if (typeof returnValue == 'undefined') {
+      console.log(`no node with value: "${value}" found`);
+    }
+
+    return returnValue;
   }
 
-  insert(value) {}
+  insert(value) {
+    const Node = this._Node;
+    let returnValue = false;
+    function findNode(node) {
+      if (value <= node.data) {
+        if (!node.left) {
+          node.left = new Node({ data: value });
+          returnValue = true;
+        } else {
+          return findNode(node.left);
+        }
+      } else {
+        if (!node.right) {
+          node.right = new Node({ data: value });
+          returnValue = true;
+        } else {
+          return findNode(node.right);
+        }
+      }
+    }
+
+    findNode(this._root);
+    return returnValue;
+  }
+
+  deleteNode(value) {
+    const Tree = this;
+
+    const nodeData = this._advancedFind(value);
+    if (!nodeData) {
+      return undefined;
+    }
+
+    this.#i = this.#i + 1;
+    if (this.#i > 4) {
+      return;
+    }
+
+    const node = nodeData.node;
+    const parent = nodeData.parent;
+
+    switch (true) {
+      case !node.right && !node.left:
+        deleteLeafNode(node);
+        break;
+      case Boolean(node.right) && Boolean(node.left):
+        deleteTwoChildrenNode(node);
+        break;
+      case Boolean(node.left):
+        deleteSingleChildNode(node);
+        break;
+      case Boolean(node.right):
+        deleteSingleChildNode(node);
+        break;
+    }
+
+    function deleteLeafNode(node) {
+      console.log('deleteLeafNode');
+      nodeData.parent = null;
+      delete node.data;
+    }
+
+    function deleteTwoChildrenNode(node) {
+      console.log('deleteTwoChildrenNode');
+      console.log(node.data);
+
+      const lowestNode = Tree._findLowestNodeFrom(node);
+      console.log(lowestNode.data);
+
+      newNode = structuredClone(lowestNode);
+      Tree.deleteNode(lowestNode.data);
+
+      newNode.left = node.left;
+      newNode.right = node.right;
+
+      if (Tree._root == node) {
+        Tree._root = newNode;
+      } else {
+        if (parent.left == node) {
+          parent.left = newNode;
+        } else {
+          parent.right = newNode;
+        }
+      }
+    }
+
+    function deleteSingleChildNode(node) {
+      console.log('deleteSingleChildNode');
+
+      if (node.left) {
+        newNode = node.left;
+      } else {
+        newNode = node.right;
+      }
+
+      if (Tree._root == node) {
+        Tree._root = newNode;
+      } else {
+        if (parent.left == node) {
+          parent.left = newNode;
+        } else {
+          parent.right = newNode;
+        }
+      }
+    }
+  }
 
   //private interface
   _root = null;
@@ -164,6 +291,59 @@ class Tree {
     checkNode(this._root);
 
     return arr;
+  }
+
+  _advancedFind(value) {
+    let node = undefined;
+    let parentNode = undefined;
+
+    function findNode(node) {
+      if (node.data == value) {
+        return node;
+      }
+
+      if (value < node.data) {
+        if (!node.left) {
+          return;
+        } else {
+          parentNode = node;
+          return findNode(node.left);
+        }
+      } else {
+        if (!node.right) {
+          return;
+        } else {
+          parentNode = node;
+          return findNode(node.right);
+        }
+      }
+    }
+
+    node = findNode(this._root);
+
+    if (typeof node == 'undefined') {
+      return undefined;
+    }
+
+    return { node, parent: parentNode };
+  }
+
+  _findLowestNodeFrom(node) {
+    if ((!node) instanceof this._Node) {
+      console.error('input needs to be a node');
+      return;
+    }
+
+    function goLower(node) {
+      if (node.left) {
+        return goLower(node.left);
+      } else {
+        return node;
+      }
+    }
+
+    const lowestNode = goLower(node);
+    return lowestNode;
   }
 }
 

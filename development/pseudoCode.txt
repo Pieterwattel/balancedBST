@@ -1,0 +1,18 @@
+find the node
+check if it is:
+    - a leaf node
+        set node to null
+
+    - node with a single child
+        write an advancedFind method that returns the node and its parent reference property
+        
+        copy the right node
+        save the right node as the new parent reference of the deleted node
+        OR if there is no parent node, save that node as the root node
+
+
+    - both children
+        scan the right side for the lowest node, keep going left until you stop
+
+        save the lowest node as the new parent reference of the deleted node
+        OR if there is no parent node, save that node as the root node
